@@ -1,10 +1,11 @@
-# Use an OpenJDK 24 image as base (replace with actual tag if available)
-FROM openjdk:17-oracle
-
+FROM maven:3.9.6-eclipse-temurin-17 as builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-COPY target/long-polling-fissures.jar app.jar
-
-EXPOSE 5050
-
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
