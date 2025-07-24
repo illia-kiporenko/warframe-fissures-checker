@@ -22,7 +22,8 @@ public class FissureController {
 	}
 
 	@GetMapping
-	public DeferredResult<List<Fissure>> getFissures(@RequestParam String missionType) {
+	public DeferredResult<List<Fissure>> getFissures(@RequestParam(required = false) String missionType) {
+
 		DeferredResult<List<Fissure>> result = new DeferredResult<>(30_000L); // 30 sec timeout
 
 		fissureService.registerListener(missionType, result);

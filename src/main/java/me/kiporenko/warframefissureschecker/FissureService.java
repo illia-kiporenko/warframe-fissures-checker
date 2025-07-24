@@ -28,8 +28,6 @@ public class FissureService {
 	public synchronized void updateFissures(List<Fissure> newFissures) {
 		currentFissures.clear();
 		currentFissures.addAll(newFissures);
-		currentFissures.stream()
-						.forEach(System.out::println);
 
 		listeners.forEach((missionType, resultList) -> {
 			List<Fissure> matching = filterByMissionType(missionType);
@@ -39,11 +37,14 @@ public class FissureService {
 				}
 			}
 		});
-
+		System.out.println("Notifiyng");
 		listeners.clear(); // clear after notifying
 	}
 
 	private List<Fissure> filterByMissionType(String type) {
+		if (type == null) {
+			return new ArrayList<>(currentFissures);
+		}
 		return currentFissures.stream()
 				.filter(f -> f.getMissionType().equalsIgnoreCase(type))
 				.collect(Collectors.toList());
