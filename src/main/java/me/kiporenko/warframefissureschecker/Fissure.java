@@ -1,18 +1,11 @@
 package me.kiporenko.warframefissureschecker;
 
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.ZonedDateTime;
 
 @Data
-@Getter
-@Setter
 public class Fissure {
 	private String id;
 	private Instant activation;
@@ -29,11 +22,13 @@ public class Fissure {
 	private int tierNum;
 	private boolean expired;
 	private String eta;
+	@JsonProperty("isStorm")
 	private boolean isStorm;
+	@JsonProperty("isHard")
 	private boolean isHard;
 
-	// геттеры и сеттеры
-
-	// можно добавить @JsonProperty, если названия в JSON не совпадают
+	// Add JsonProperty annotations if JSON field names differ from Java field names
+	// Example:
+	// @JsonProperty("mission_type")
+	// private String missionType;
 }
-

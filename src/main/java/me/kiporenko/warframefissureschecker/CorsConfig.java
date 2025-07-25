@@ -6,15 +6,17 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+@EnableWebMvc
+public class CorsConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-				.allowedOriginPatterns("*")
-				.allowedMethods("GET", "POST", "PUT", "DELETE")
-				.allowedHeaders("Origin", "Content-Type", "Accept", "Authorization")
-				.allowCredentials(true)
-				.maxAge(3600);
+				.allowedOriginPatterns("*")  // Use patterns instead of origins for better flexibility
+				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+				.allowedHeaders("*")
+				.exposedHeaders("*")  // Allow frontend to access all response headers
+				.allowCredentials(false)
+				.maxAge(3600);  // Cache preflight requests for 1 hour
 	}
 }
